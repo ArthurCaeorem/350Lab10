@@ -65,16 +65,17 @@ int item;
 while(1){
         down(semID,EMPTY);
         down(semID,MUTEX); //mutex is blocked
-        for(int i = 0; i < 5; i++){
         item = rand()%9 + 1;
         printf("%d Has been produced.\n",item);
         shm->i[shm->count] = item;
         shm->count++;
-        }
-        printf("Producer finished.\n");
-        sleep(3);
+        sleep(2);
         up(semID,MUTEX); //mutex is unblocked
-        up(semID,FULL);
+        if(shm->count == 4){ //once count is full, 5 rounds of consumer are set.
+            for(int i = 0; i < 5; i++){
+                up(semID,FULL);
+            }
+        }
 }
 
 

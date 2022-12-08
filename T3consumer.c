@@ -69,6 +69,7 @@ while(1){
     sleep(2);
     up(semID,MUTEX); //mutex is unblocked
          if(shm->count == 0){ //once count is exhausted, 5 runs of the producer are set.
+         printf("Consumer has finished.\n");
             for(int i = 0; i < 5; i++){
          up(semID,EMPTY);
             }

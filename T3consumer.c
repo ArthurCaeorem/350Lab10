@@ -59,19 +59,21 @@ semID = semget(key,3,0666); //semaphores are retrieved
 
 int item=0;
 while(1){
-    down(semID,MUTEX); //mutex becomes blocked
     down(semID,FULL);
-    for(int i = 0; i < 5; i++){
+    down(semID,MUTEX); //mutex becomes blocked
     shm->count--; //decrement count
     item = shm->i[shm->count]; //records this shm->i location as item
     shm->i[shm->count] = 0;
     printf("%d has been consumed.\n",item);
-    }
     printf("consumer finished.\n");
-    sleep(3);
+    sleep(2);
     up(semID,MUTEX); //mutex is unblocked
-    up(semID,EMPTY);
-}
+         if(shm->count == 0){ //once count is exhausted, 5 runs of the producer are set.
+            for(int i = 0; i < 5; i++){
+         up(semID,EMPTY);
+            }
+        }
+    }
     
     exit(0);
 }

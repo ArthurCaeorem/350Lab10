@@ -65,7 +65,6 @@ while(1){
     item = shm->i[shm->count]; //records this shm->i location as item
     shm->i[shm->count] = 0;
     printf("%d has been consumed.\n",item);
-    printf("consumer finished.\n");
     sleep(2);
     up(semID,MUTEX); //mutex is unblocked
          if(shm->count == 0){ //once count is exhausted, 5 runs of the producer are set.

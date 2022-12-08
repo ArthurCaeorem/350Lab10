@@ -72,10 +72,12 @@ while(1){
         sleep(2);
         up(semID,MUTEX); //mutex is unblocked
         if(shm->count == 4){ //once count is full, 5 rounds of consumer are set.
-        printf("Producer has finished.\n");
             for(int i = 0; i < 5; i++){
                 up(semID,FULL);
             }
+        }
+        if(shm->count == 5){
+            printf("Producer has finished.\n");
         }
 }
 
